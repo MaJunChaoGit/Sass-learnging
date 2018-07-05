@@ -1,0 +1,10 @@
+$fancy-width:400px !default;
+.fancybox{
+	width:$fancy-width;
+	background-color: red;
+	height: 100px;
+	float:left;
+	margin:{
+		top:100px;
+	}
+}
