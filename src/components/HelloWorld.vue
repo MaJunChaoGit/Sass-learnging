@@ -33,6 +33,17 @@
       <article>子组合选择器和同层组合选择器</article>
     </div>
     <div class="fancybox"></div>
+    <div class="blue-theme">
+      <aside>
+        我是嵌套导入的蓝色主题
+      </aside>
+    </div>
+    <div class="notice">我是圆角混合器</div>
+    <ul class="plain">
+      <li>我是@mixin混合器的css规则1</li>
+      <li>我是@mixin混合器的css规则2</li>
+      <li>我是@mixin混合器的css规则3</li>
+    </ul>
   </div>
 </template>
 
@@ -131,10 +142,51 @@ nav{
     right: 0px;
   }
 }
-// 默认变量值,使用sass的!default标签可以实现这个目的。它很像css属性中!important标签的对立面，不同的是!default用于变量，含义是：如果这个变量被声明赋值了，那就用它声明的值，否则就用这个默认值
+//默认变量值,使用sass的!default标签可以实现这个目的。它很像css属性中!important标签的对立面，
+//不同的是!default用于变量，含义是：如果这个变量被声明赋值了，那就用它声明的值，否则就用这个默认值
 $fancy-width:100px;
 @import '../common/index';
 .fancybox {
   width:$fancy-width;
+}
+// 嵌套导入
+.blue-theme {
+  @import "../common/_blue-theme"
+}
+// 这种注释类型为静默注释，不会被编译成css
+/* 这种注释会出现生成的css文件中*/
+/* 当然普通的注释如果出现在了不正确的地方，最终生成的css文件中也会去掉这段注释*/
+
+// 混合器初步使用
+@mixin rounded-corners {
+  border-radius:5px;
+}
+.notice{
+  background-color:green;
+  border:2px solid #00aa00;
+  @include rounded-corners;
+}
+// 混合器中不仅可以包含属性，可以包含CSS规则，包含选择器和选择器中的属性
+@mixin no-bullets{
+  list-style:none;
+  li{
+    list-style-image: none;
+    list-style-type: none;
+    margin-left:0px;
+  }
+}
+ul.plain {
+  margin-top:170px;
+  color:#444;
+  @include no-bullets;
+}
+// 给混合器传参数
+@mixin link-colors($normal,$hover,$visited){
+  color:$    ;
+  &:hover{color:$hover;}
+  &:visited{color:$visited;}
+}
+a{
+  @include link-colors(green,red,blue);
 }
 </style>
